@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flagmaker</title>
+    <style>
+        canvas {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="flag" width="400" height="300"></canvas>
+    <form action="#0" id="mainForm">
+        <label for="numberOfRows">Number of rows</label>
+        <input type="number" id="numberOfRows">
+        <div class="form-control">
+            <label for="color1">Color 1</label>
+            <input type="text" id="color1">
+        </div>
+        <div class="form-control">
+            <label for="color2">Color 2</label>
+            <input type="text" id="color2">
+        </div>
+        <div class="form-control">
+            <label for="color3">Color 3</label>
+            <input type="text" id="color3">
+        </div>
+        <div class="form-control">
+            <label for="color4">Color 4</label>
+            <input type="text" id="color4">
+        </div>
+        <div class="form-control">
+            <button type="submit">Обновить</button>
+        </div>
+    </form>
+    <script>
+        const canvas = document.getElementById('flag');
+        const context = canvas.getContext('2d');
+        const inputNumberOfRows = document.getElementById('numberOfRows');
+        const color1 = document.getElementById('color1');
+        const color2 = document.getElementById('color2');
+        const color3 = document.getElementById('color3');
+        const color4 = document.getElementById('color4');
+        const form = document.getElementById('mainForm');
+
+        let numberOfRows = 4;
+
+        function clearRows() {
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawRows(numberOfRows, color1 = 'red', color2 = 'black', color3 = 'purple') {
+            context.fillStyle = color1;
+            context.fillRect(0, 0, canvas.width, canvas.height / numberOfRows);
+
+            if (numberOfRows > 1) {
+                context.fillStyle = color2;
+                context.fillRect(0, canvas.height / numberOfRows, canvas.width, canvas.height / numberOfRows);
+            }
+
+            if (numberOfRows > 2) {
+                context.fillStyle = color3;
+                context.fillRect(0, canvas.height / numberOfRows * 2, canvas.width, canvas.height / numberOfRows);
+            }
+        }
+
+        clearRows();
+        drawRows(numberOfRows);
+
+        form.addEventListener('submit', e => {
+            clearRows();
+            drawRows(inputNumberOfRows.value, color1.value, color2.value, color3.value);
+        })
+
+    </script>
+</body>
+</html>
